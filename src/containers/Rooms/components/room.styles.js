@@ -33,6 +33,12 @@ export const RoomContainer = styled.li`
   &:hover {
     background: #e6e4e4;
   }
+
+  @media screen and (max-width: 700px) {
+    height: 120px;
+    flex-direction: column;
+    padding: 40px 0;
+  }
 `;
 
 export const Details = styled.div`
@@ -42,8 +48,23 @@ export const Details = styled.div`
   align-content: center;
   width: 75%;
 
-  span {
-    flex: 1 1 20em;
+  div {
+    flex: 1 2 20em;
+
+    @media screen and (max-width: 700px) {
+      flex: 1 1 20em;
+    }
+
+    &:first-child {
+      flex: 1 1 20em;
+      font-size: 1.2em;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    height: 100%;
+    margin-bottom: 15px;
   }
 `
 
@@ -53,10 +74,6 @@ export const Actions = styled.div`
   align-items: center;
   align-content: center;
   width: 25%;
-
-  div {
-    flex: 1 1 20em;
-  }
 `
 
 export const StyledLink = styled(Link)`
@@ -86,4 +103,10 @@ export const StyledLink = styled(Link)`
 
 export const TrashIcon = styled(FaTrashAlt)`
   cursor: pointer;
+`
+
+export const AdminActions = styled.div`
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
 `

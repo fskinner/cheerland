@@ -10,6 +10,7 @@ const API_URL = `http://localhost:4000`;
 const RoomList = styled.ul`
   width: 80%;
   margin: 0 auto;
+  padding: 0;
 `
 
 const Rooms = () => {
