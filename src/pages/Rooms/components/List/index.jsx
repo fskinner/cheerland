@@ -1,25 +1,20 @@
 import React, { useReducer, useEffect } from "react";
-import styled from "styled-components";
 
 import { reducer, initialState } from "./reducer";
 
-import Room from "./components/Room"
+import Spinner from "components/Spinner"
+import CenterList from "components/CenterList"
+import Room from "./Room"
 
-const API_URL = `http://localhost:4000`;
+const API_URL = process.env.API_URL || `http://localhost:4000/api`;
 
-const RoomList = styled.ul`
-  width: 80%;
-  margin: 0 auto;
-  padding: 0;
-`
-
-const Rooms = () => {
+const RoomList = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     dispatch({ type: "ROOMS_REQUEST" });
 
-    fetch(`${API_URL}/api/rooms`)
+    fetch(`${API_URL}/rooms`)
       .then(response => response.json())
       .then(jsonResponse => {
           dispatch({
@@ -39,19 +34,19 @@ const Rooms = () => {
   return (
     <div>
       {loading && !errorMessage ? (
-        <span>loading... </span>
+        <Spinner />
       ) : errorMessage ? (
         <div className="errorMessage">{errorMessage}</div>
       ) : (
-        <RoomList>
+        <CenterList>
           {rooms.map((room, index) => (
             <Room key={`${index}-${room.id}`} room={room} />
           ))}
-        </RoomList>
+        </CenterList>
         
       )}
     </div>
   );
 }
 
-export default Rooms;
+export default RoomList;

@@ -17,7 +17,7 @@ const Room = ({ room }) => {
         <div>{room.women_only ? "Feminino" : "Misto"}</div>
       </Details>
       <Actions>
-        <StyledLink to="/">Ver</StyledLink>
+        <StyledLink to={`rooms/${room.id}`}>Ver</StyledLink>
         <AdminActions>
           <Link to="/">
             <FaEdit/>
