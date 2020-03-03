@@ -3,15 +3,14 @@ import jwtDecode from "jwt-decode"
 
 const authContext = createContext()
 
-// const API_URL = process.env.API_URL || `http://localhost:4000/api`
 const KEY = "cheerlandToken"
 const API_URL = process.env.API_URL || `http://localhost:4000/api`;
 
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
-export function ProvideAuth({ children }) {
+export function ProvideAuth({ children, value }) {
   const auth = useProvideAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+  return <authContext.Provider value={value || auth}>{children}</authContext.Provider>;
 }
 
 // Hook for child components to get the auth object ...

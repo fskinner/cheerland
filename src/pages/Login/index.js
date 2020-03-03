@@ -7,18 +7,18 @@ import { LoginBox, LoginHeader, Form, InputField, Submit, FormError } from "./lo
 const API_URL = process.env.API_URL || `http://localhost:4000/api`;
 
 const Login = () => {  
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
   const auth = useAuth();
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value)
+    setEmail(e.target.value.toLowerCase())
   }
 
   const handlePassChange = (e) => {
-    setPassword(e.target.value)
+    setPassword(e.target.value.replace(/[^0-9]/g, ''))
   }
 
   const handleSubmit = async(e) => {
@@ -37,9 +37,15 @@ const Login = () => {
 
       if(!response.ok) {
         let message = response.statusText
+
         if (response.status === 401) {
-          message = "Email ou senha inválidos"
+          message = "Senha inválida"
         }
+
+        if (response.status === 404) {
+          message = "Usuário não encontrado"
+        }
+
         throw Error(message)
       }
 
@@ -60,8 +66,8 @@ const Login = () => {
         </LoginHeader>
         <Form onSubmit={handleSubmit}>
           { error && <FormError>{error}</FormError>}
-          <InputField placeholder="Email" type="email" onChange={handleEmailChange} autocomplete />
-          <InputField placeholder="Senha" type="password" onChange={handlePassChange} />
+          <InputField placeholder="Email" type="email" onChange={handleEmailChange} value={email} autocomplete />
+          <InputField placeholder="Senha" type="password" onChange={handlePassChange} value={password} />
 
           <Submit type="submit">Entrar</Submit>
         </Form>

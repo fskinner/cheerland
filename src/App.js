@@ -22,7 +22,7 @@ export default function App() {
         <Header />
         <MainContainer>
           <Switch>
-            <Route path="/login" component={Login} />
+            <Route exact path="/login" component={Login} />
             <Route path="/rooms" component={Rooms} />
             <Route exact path="/">
               <div>Início</div>

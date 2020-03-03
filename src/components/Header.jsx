@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  Link,
+  NavLink,
 } from "react-router-dom";
 
 import { useAuth } from "hooks/use-auth.js";
@@ -28,12 +28,19 @@ const LinkList = styled.ul`
   justify-content: space-evenly;
   list-style: none;
 `
-
-const StyledLink = styled(Link)`
+const activeClassName = "nav-item-active"
+const StyledNavLink = styled(NavLink).attrs({ activeClassName })`
   text-decoration: none;
+  padding: 5px;
+
+  &.${activeClassName} {
+    color: #c78c08;
+    font-weight: bold;
+    border-bottom: 3px solid #c78c08;
+  }
 
   &:hover {
-    text-decoration: underline;
+    border-bottom: 3px solid #c78c08;
   }
 `
 
@@ -48,10 +55,10 @@ const Header = () => {
       <Nav>
         <LinkList>
           <li>
-            <StyledLink to="/">Início</StyledLink>
+            <StyledNavLink to="/rooms">Quartos</StyledNavLink>
           </li>
           <li>
-            <StyledLink to="/rooms">Quartos</StyledLink>
+            <StyledNavLink to="/users">Usuários</StyledNavLink>
           </li>
           {auth.user &&
             <li>
@@ -60,8 +67,8 @@ const Header = () => {
           }
           {
             auth.user ?
-              <StyledLink to="/login" onClick={auth.deauth}>Sair</StyledLink>
-              : <StyledLink to="/login">Entrar</StyledLink>
+              <StyledNavLink to="/login" onClick={auth.deauth}>Sair</StyledNavLink>
+              : <StyledNavLink to="/login">Entrar</StyledNavLink>
           }
         </LinkList>
       </Nav>
