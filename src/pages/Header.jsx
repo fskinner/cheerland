@@ -4,14 +4,17 @@ import {
   Link,
 } from "react-router-dom";
 
+import { useAuth } from "hooks/use-auth.js";
+
 const HeaderContainer = styled.header`
-  background-color: #fff;
+  background-color: #f1eded;
   height: 70px;
-  color: white;
+  color: black;
   padding: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 5px;
 `;
 
 const Nav = styled.nav`
@@ -23,6 +26,7 @@ const LinkList = styled.ul`
   padding: 0;
   display: flex;
   justify-content: space-evenly;
+  list-style: none;
 `
 
 const StyledLink = styled(Link)`
@@ -33,7 +37,12 @@ const StyledLink = styled(Link)`
   }
 `
 
+const UserGreeting = styled.span`
+`
+
 const Header = () => {
+  const auth = useAuth();
+
   return (
     <HeaderContainer>
       <Nav>
@@ -44,9 +53,16 @@ const Header = () => {
           <li>
             <StyledLink to="/rooms">Quartos</StyledLink>
           </li>
-          <li>
-            <StyledLink to="/login">Entrar</StyledLink>
-          </li>
+          {auth.user &&
+            <li>
+              <UserGreeting>Olá, {auth.user.name}</UserGreeting>
+            </li>
+          }
+          {
+            auth.user ?
+              <StyledLink to="/login" onClick={auth.deauth}>Sair</StyledLink>
+              : <StyledLink to="/login">Entrar</StyledLink>
+          }
         </LinkList>
       </Nav>
       

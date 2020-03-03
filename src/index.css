@@ -1,6 +1,8 @@
 @import-normalize; /* bring in normalize.css styles */
 
 body {
+  margin: 0;
   font-size: 17px;
   font-family: "Helvetica", sans-serif;
+  background: #dcd3c5;
 }

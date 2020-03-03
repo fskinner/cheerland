@@ -77,8 +77,8 @@ export const Actions = styled.div`
 `
 
 export const StyledLink = styled(Link)`
-  background-color: #0069d9;
-  border: .1rem solid #0069d9;
+  background-color: #3f81c7;
+  border: .1rem solid #3f81c7;
   border-radius: .4rem;
   color: #fff;
   cursor: pointer;
