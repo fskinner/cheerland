@@ -8,7 +8,7 @@ import styled from "styled-components"
 
 import { ProvideAuth } from "hooks/use-auth.js";
 
-import Header from "./pages/Header"
+import Header from "./components/Header"
 import Rooms from "./pages/Rooms"
 import Login from "./pages/Login"
 

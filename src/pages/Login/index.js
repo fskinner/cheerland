@@ -23,8 +23,7 @@ const Login = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    console.log('handleSubmit', `${API_URL}/sessions`)
-    console.log('body', JSON.stringify({ user: { email, password }}))
+
     try {
       const response = await fetch(`${API_URL}/sessions`, {
         method: "POST",
@@ -37,16 +36,17 @@ const Login = () => {
       })
 
       if(!response.ok) {
-        throw Error(response.statusText)
+        let message = response.statusText
+        if (response.status === 401) {
+          message = "Email ou senha inválidos"
+        }
+        throw Error(message)
       }
 
       const data = await response.json()
 
-      console.log('data.token', data.token)
-
       auth.auth(data.token)
     } catch(e) {
-      console.log('error', e.message)
       setError(e.message)
     }
   }
