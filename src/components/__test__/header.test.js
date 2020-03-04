@@ -15,7 +15,6 @@ test("renders logged out Header", async () => {
   )
 
   expect(container.querySelector("ul")).toHaveTextContent("Quartos")
-  expect(container.querySelector("ul")).toHaveTextContent("Usuários")
   expect(container.querySelector("ul")).toHaveTextContent("Entrar")
 
   expect(container.querySelector("ul")).not.toHaveTextContent("Sair")
@@ -24,7 +23,7 @@ test("renders logged out Header", async () => {
 
 test("renders logged Header", async () => {
   const userName = "Foo"
-  const fakeAuth = { auth: () => {}, user: { name: userName}, deauth: () => {}}
+  const fakeAuth = { auth: () => {}, user: { name: userName }, deauth: () => {}}
 
   const { container } = render(
     <ProvideAuth value={fakeAuth} >
@@ -34,6 +33,27 @@ test("renders logged Header", async () => {
     </ProvideAuth>
   )
 
+  expect(container.querySelector("ul")).toHaveTextContent("Meus dados")
+  expect(container.querySelector("ul")).toHaveTextContent("Quartos")
+  expect(container.querySelector("ul")).toHaveTextContent("Sair")
+
+  expect(container.querySelector("ul")).toHaveTextContent(`Olá, ${userName}`)
+  expect(container.querySelector("ul")).not.toHaveTextContent("Entrar")
+})
+
+test("renders admin Header", async () => {
+  const userName = "Foo"
+  const fakeAuth = { auth: () => {}, user: { name: userName, is_admin: true }, deauth: () => {}}
+
+  const { container } = render(
+    <ProvideAuth value={fakeAuth} >
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>
+    </ProvideAuth>
+  )
+
+  expect(container.querySelector("ul")).toHaveTextContent("Meus dados")
   expect(container.querySelector("ul")).toHaveTextContent("Quartos")
   expect(container.querySelector("ul")).toHaveTextContent("Usuários")
   expect(container.querySelector("ul")).toHaveTextContent("Sair")

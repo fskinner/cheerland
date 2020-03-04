@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "hooks/use-auth.js";
+// import { useAuth } from "hooks/use-auth.js";
 
 import Spinner from "components/Spinner"
 import CenterDiv from "components/CenterDiv"
@@ -14,7 +14,7 @@ const RoomDetail = () => {
 
   const { roomId } = useParams();
 
-  const auth = useAuth();
+  // const auth = useAuth();
 
   useEffect(() => {
     setLoading(true)

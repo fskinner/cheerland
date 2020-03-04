@@ -54,22 +54,31 @@ const Header = () => {
     <HeaderContainer>
       <Nav>
         <LinkList>
+          {auth.user &&
+            <li>
+              <StyledNavLink to={`/users/${auth.user.id}`}>Meus dados</StyledNavLink>
+            </li>        
+          }
           <li>
             <StyledNavLink to="/rooms">Quartos</StyledNavLink>
           </li>
-          <li>
-            <StyledNavLink to="/users">Usuários</StyledNavLink>
-          </li>
+          { auth.user && auth.user.is_admin &&
+            <li>
+              <StyledNavLink to="/users">Usuários</StyledNavLink>
+            </li>
+          }
           {auth.user &&
             <li>
               <UserGreeting>Olá, {auth.user.name}</UserGreeting>
             </li>
           }
-          {
-            auth.user ?
-              <StyledNavLink to="/login" onClick={auth.deauth}>Sair</StyledNavLink>
-              : <StyledNavLink to="/login">Entrar</StyledNavLink>
-          }
+          <li>
+            {
+              auth.user ?
+                <StyledNavLink to="/login" onClick={auth.deauth}>Sair</StyledNavLink>
+                : <StyledNavLink to="/login">Entrar</StyledNavLink>
+            }
+          </li>
         </LinkList>
       </Nav>
       

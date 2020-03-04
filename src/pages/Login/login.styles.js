@@ -7,9 +7,11 @@ export const LoginBox = styled.section`
   padding: 0;
   justify-content: center;
   margin: 5px auto;
+  border-radius: .4rem;
 
   @media screen and (max-width: 700px) {
-    width: 90%;
+    width: 95%;
+    height: 60vh;
   }
 
   @media screen and (min-width: 701px) and (max-width: 800px) {
@@ -25,9 +27,10 @@ export const LoginHeader = styled.header`
   margin: 0 0 50px 0;
   text-transform: uppercase;
   line-height: 1.6em;
-  background: #dcb253;
+  background: #f3daa2;
   padding: 20px;
   font-size: 1.3em;
+  border-radius: .4rem .4rem 0 0;
 `
 
 export const Form = styled.form`
@@ -41,6 +44,8 @@ export const InputField = styled.input`
   width: 75%;
   text-align: center;
   font-size: 18px;
+  border-radius: .4rem;
+  border: 1px solid #dcd3c5;
 
   &::placeholder {
     text-align: center;
@@ -56,6 +61,7 @@ export const Submit = styled.button`
   background: #dcb253;
   font-size: 18px;
   text-transform: uppercase;
+  border-radius: .4rem;
 
   &:hover {
     background: #eaab1c;

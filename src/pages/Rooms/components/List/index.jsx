@@ -4,6 +4,8 @@ import { reducer, initialState } from "./reducer";
 
 import Spinner from "components/Spinner"
 import CenterList from "components/CenterList"
+import {AddButton, AddDiv} from "components/AdminTools"
+
 import Room from "./Room"
 
 const API_URL = process.env.API_URL || `http://localhost:4000/api`;
@@ -33,6 +35,10 @@ const RoomList = () => {
 
   return (
     <div>
+      <AddDiv>
+        <AddButton to="/rooms/new"> + room </AddButton>
+      </AddDiv>
+    
       {loading && !errorMessage ? (
         <Spinner />
       ) : errorMessage ? (
