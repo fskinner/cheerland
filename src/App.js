@@ -11,6 +11,7 @@ import { ProvideAuth } from "hooks/use-auth.js";
 import Header from "./components/Header"
 import Rooms from "./pages/Rooms"
 import Login from "./pages/Login"
+import Users from "./pages/Users"
 
 const MainContainer = styled.main`
   padding: 50px 10px;
@@ -24,6 +25,7 @@ export default function App() {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route path="/rooms" component={Rooms} />
+            <Route path="/users" component={Users} />
             <Route exact path="/">
               <div>Início</div>
             </Route>

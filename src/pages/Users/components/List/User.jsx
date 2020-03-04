@@ -7,17 +7,17 @@ import {
 
 import { ListContainer, Details, Actions, StyledLink, TrashIcon, AdminActions } from "components/list.styles"
 
-const Room = ({ room, admin }) => {
+const User = ({ user, admin }) => {
   return (
-    <ListContainer group={room.group}>
+    <ListContainer group={user.allowed_group}>
       <Details>
-        <div>{room.label}</div>
-        <div>{room.max_beds}/{room.max_beds}</div>
-        <div>Grupo {room.group}</div>
-        <div>{room.women_only ? "Feminino" : "Misto"}</div>
+        <div>{user.name}</div>
+        <div>Grupo {user.allowed_group}</div>
+        <div>{user.gender}</div>
+        <div>{user.needs_transportation && !user.cancel_bus ? "Ônibus" : ""}</div>
       </Details>
       <Actions>
-        <StyledLink to={`rooms/${room.id}`}>Ver</StyledLink>
+        <StyledLink to={`users/${user.id}`}>Ver</StyledLink>
         {admin &&
           <AdminActions>
             <Link to="/">
@@ -31,4 +31,4 @@ const Room = ({ room, admin }) => {
   );
 };
 
-export default Room;
+export default User;

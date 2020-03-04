@@ -18,7 +18,7 @@ const pickColorByGroup = props => {
   }
 }
 
-export const RoomContainer = styled.li`
+export const ListContainer = styled.li`
   height: 35px;
   padding: 15px;
   list-style: none;

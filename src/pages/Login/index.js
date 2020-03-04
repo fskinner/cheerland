@@ -52,6 +52,8 @@ const Login = ({ history }) => {
       const data = await response.json()
 
       auth.auth(data.token)
+
+      history.replace("/rooms")
     } catch(e) {
       setError(e.message)
     }

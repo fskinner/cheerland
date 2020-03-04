@@ -5,54 +5,53 @@ import { reducer, initialState } from "./reducer";
 
 import Spinner from "components/Spinner"
 import CenterList from "components/CenterList"
-import CenterDiv from "components/CenterDiv"
-import {AddButton, AddDiv} from "components/AdminTools"
+import { AddButton, AddDiv } from "components/AdminTools"
 
-import Room from "./Room"
+import User from "./User"
 
 const API_URL = process.env.API_URL || `http://localhost:4000/api`;
 
-const RoomList = () => {
+const UserList = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const auth = useAuth();
 
   useEffect(() => {
-    dispatch({ type: "ROOMS_REQUEST" });
+    dispatch({ type: "USERS_REQUEST" });
 
-    fetch(`${API_URL}/rooms`)
+    fetch(`${API_URL}/users`)
       .then(response => response.json())
       .then(jsonResponse => {
           dispatch({
-            type: "ROOMS_SUCCESS",
+            type: "USERS_SUCCESS",
             payload: jsonResponse.data
           })
       }).catch(() => {
         dispatch({
-          type: "ROOMS_FAILURE",
-          error: "Failed to load rooms"
+          type: "USERS_FAILURE",
+          error: "Failed to load users"
         });
       });
   }, []);
 
-  const { rooms, errorMessage, loading } = state;
+  const { users, errorMessage, loading } = state;
   const isAdmin = auth.user && auth.user.is_admin
+
+  if(!isAdmin) return null;
+
   return (
     <div>
-      {isAdmin &&
-        <AddDiv>
-          <AddButton to="/rooms/new"> + room </AddButton>
-        </AddDiv>
-      }
+      <AddDiv>
+        <AddButton to="/users/new"> + user </AddButton>
+      </AddDiv>
       {loading && !errorMessage ? (
         <Spinner />
       ) : errorMessage ? (
         <div className="errorMessage">{errorMessage}</div>
       ) : (
         <CenterList>
-          {rooms.map((room, index) => (
-            <Room key={`${index}-${room.id}`} room={room} admin={isAdmin}/>
+          {users.map((user, index) => (
+            <User key={`${index}-${user.id}`} user={user} admin={isAdmin}/>
           ))}
-          {rooms.length === 0 && <CenterDiv>Nenhum quarto cadastrado</CenterDiv>}
         </CenterList>
         
       )}
@@ -60,4 +59,4 @@ const RoomList = () => {
   );
 }
 
-export default RoomList;
+export default UserList;
