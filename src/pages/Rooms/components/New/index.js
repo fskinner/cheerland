@@ -2,13 +2,14 @@ import React, { useState } from "react";
 // import { useAuth } from "hooks/use-auth.js";
 
 import CenterDiv from "components/CenterDiv"
-import { RoomForm, Header } from "./form.styles"
+
+import { FormBox, FormHeader, Form, InputField, Submit, FormError } from "components/form.styles"
 
 const API_URL = process.env.API_URL || `http://localhost:4000/api`;
 
-const NewRoom = () => {  
-  const [errorMessage, setError] = useState(null);
-  const [name, setName] = useState('');
+const NewRoom = ({ history }) => {  
+  const [errors, setErrors] = useState(null);
+  const [label, setLabel] = useState('');
   const [description, setDescription] = useState('');
   const [maxBeds, setMaxBeds] = useState('');
   const [group, setGroup] = useState('');
@@ -18,7 +19,7 @@ const NewRoom = () => {
   const handleSubmit = async(e) => {
     e.preventDefault()
 
-    const room = { name, description, max_beds: maxBeds, group, photo_url: photoUrl, women_only: womenOnly }
+    const room = { label, description, max_beds: maxBeds, group, photo_url: photoUrl, women_only: womenOnly }
 
     try {
       const response = await fetch(`${API_URL}/rooms`, {
@@ -39,39 +40,40 @@ const NewRoom = () => {
         }
 
         if (response.status === 422) {
-          message = "Erro de validação"
+          const {errors} = await response.json()
+          message = errors
         }
-        throw Error(message)
+
+        throw Error(JSON.stringify(message))
       }
 
-
+      history.replace("/rooms")
     } catch(e) {
-      setError(e.message)
+      setErrors(JSON.parse(e.message))
     }
   }
 
   return (
     <CenterDiv>
-      <RoomForm onSubmit={handleSubmit}>
-        <Header>Novo Quarto</Header>
-        <div>{errorMessage}</div>
-        <input type="text" name="name" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)}/>
-        <br/>
-        <input type="text" name="description" placeholder="Descrição" value={description} onChange={(e) => setDescription(e.target.value)}/>
-        <br/>
-        <input type="number" name="max_beds" placeholder="Camas" value={maxBeds} onChange={(e) => setMaxBeds(e.target.value)}/>
-        <br/>
-        <input type="text" name="group" placeholder="Grupo" value={group} onChange={(e) => setGroup(e.target.value)}/>
-        <br/>
-        <input type="text" name="photo_url" placeholder="URL das Fotos" value={photoUrl} onChange={(e) => setPhotoUrl(e.target.value)}/>
+      <FormBox size="big">
+        <FormHeader>Novo Quarto</FormHeader>
+        <Form onSubmit={handleSubmit}>
+          { errors && typeof errors === 'string' && <FormError>{errors}</FormError>}
 
-        <br/>
-        <label htmlFor="women_only" name="women_only">Quarto feminino?</label>
-        <input type="checkbox" id="women_only" placeholder="Quarto feminino?" value={womenOnly} onChange={(e) => setWomenOnly(e.target.checked)}/>
+          <InputField name="label" placeholder="Nome" value={label} error={errors && errors.label} onChange={(e) => setLabel(e.target.value)}/>
+          <InputField name="description" placeholder="Descrição" value={description} error={errors && errors.description} onChange={(e) => setDescription(e.target.value)}/>
+          <InputField name="max_beds" type="number" placeholder="Camas" value={maxBeds} error={errors && errors.max_beds} onChange={(e) => setMaxBeds(e.target.value)}/>
+          <InputField name="group" placeholder="Grupo" value={group} error={errors && errors.group} onChange={(e) => setGroup(e.target.value)}/>
+          <InputField name="photo_url" placeholder="URL das Fotos" value={photoUrl} error={errors && errors.photo_url} onChange={(e) => setPhotoUrl(e.target.value)}/>
 
-        <br/>
-        <input type="submit" value="Salvar" />
-      </RoomForm>
+          <br/>
+          <label htmlFor="women_only" name="women_only">Quarto feminino?</label>
+          <input type="checkbox" id="women_only" placeholder="Quarto feminino?" value={womenOnly} onChange={(e) => setWomenOnly(e.target.checked)}/>
+
+          <Submit type="submit">Salvar</Submit>
+        </Form>
+
+      </FormBox>
     </CenterDiv>
   );
 }

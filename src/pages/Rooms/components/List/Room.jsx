@@ -7,7 +7,7 @@ import {
 
 import { RoomContainer, Details, Actions, StyledLink, TrashIcon, AdminActions } from "./room.styles"
 
-const Room = ({ room }) => {
+const Room = ({ room, admin }) => {
   return (
     <RoomContainer group={room.group}>
       <Details>
@@ -18,12 +18,14 @@ const Room = ({ room }) => {
       </Details>
       <Actions>
         <StyledLink to={`rooms/${room.id}`}>Ver</StyledLink>
-        <AdminActions>
-          <Link to="/">
-            <FaEdit/>
-          </Link>
-          <TrashIcon/>
-        </AdminActions>
+        {admin &&
+          <AdminActions>
+            <Link to="/">
+              <FaEdit/>
+            </Link>
+            <TrashIcon/>
+          </AdminActions>
+        }
       </Actions>
 
       

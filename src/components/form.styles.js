@@ -1,9 +1,9 @@
 import styled from "styled-components"
 
-export const LoginBox = styled.section`
+export const FormBox = styled.section`
   background-color: #f1eded;
-  height: 35vh;
-  width: 30%;
+  height: ${props => props.size === 'big' ? '55vh' : '35vh'};
+  width: ${props => props.size === 'big' ? '50%' : '30%'};
   padding: 0;
   justify-content: center;
   margin: 5px auto;
@@ -11,7 +11,7 @@ export const LoginBox = styled.section`
 
   @media screen and (max-width: 700px) {
     width: 95%;
-    height: 60vh;
+    height: ${props => props.size === 'big' ? '80vh' : '60vh'};
   }
 
   @media screen and (min-width: 701px) and (max-width: 800px) {
@@ -23,7 +23,7 @@ export const LoginBox = styled.section`
   }
 `;
 
-export const LoginHeader = styled.header`
+export const FormHeader = styled.header`
   margin: 0 0 50px 0;
   text-transform: uppercase;
   line-height: 1.6em;
@@ -45,11 +45,12 @@ export const InputField = styled.input`
   text-align: center;
   font-size: 18px;
   border-radius: .4rem;
-  border: 1px solid #dcd3c5;
+  border: ${props => props.error && props.error.length > 0 ? '1px solid red' : '1px solid #dcd3c5'};
 
   &::placeholder {
     text-align: center;
     font-size: 18px;
+    color: ${props => props.error && props.error.length > 0 ? 'red' : '#86837e'};
   }
 `
 

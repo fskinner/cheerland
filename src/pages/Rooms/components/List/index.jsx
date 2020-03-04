@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from "react";
+import { useAuth } from "hooks/use-auth.js";
 
 import { reducer, initialState } from "./reducer";
 
@@ -12,6 +13,7 @@ const API_URL = process.env.API_URL || `http://localhost:4000/api`;
 
 const RoomList = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const auth = useAuth();
 
   useEffect(() => {
     dispatch({ type: "ROOMS_REQUEST" });
@@ -32,13 +34,14 @@ const RoomList = () => {
   }, []);
 
   const { rooms, errorMessage, loading } = state;
-
+  const isAdmin = auth.user && auth.user.is_admin
   return (
     <div>
-      <AddDiv>
-        <AddButton to="/rooms/new"> + room </AddButton>
-      </AddDiv>
-    
+      {isAdmin &&
+        <AddDiv>
+          <AddButton to="/rooms/new"> + room </AddButton>
+        </AddDiv>
+      }
       {loading && !errorMessage ? (
         <Spinner />
       ) : errorMessage ? (
@@ -46,7 +49,7 @@ const RoomList = () => {
       ) : (
         <CenterList>
           {rooms.map((room, index) => (
-            <Room key={`${index}-${room.id}`} room={room} />
+            <Room key={`${index}-${room.id}`} room={room} admin={isAdmin}/>
           ))}
         </CenterList>
         

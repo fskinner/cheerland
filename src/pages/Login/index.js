@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useAuth } from "hooks/use-auth.js";
 
 import CenterDiv from "components/CenterDiv"
-import { LoginBox, LoginHeader, Form, InputField, Submit, FormError } from "./login.styles"
+import { FormBox, FormHeader, Form, InputField, Submit, FormError } from "components/form.styles"
 
 const API_URL = process.env.API_URL || `http://localhost:4000/api`;
 
-const Login = () => {  
+const Login = ({ history }) => {  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -59,11 +59,11 @@ const Login = () => {
 
   return (
     <CenterDiv>
-      <LoginBox>
-        <LoginHeader>
+      <FormBox>
+        <FormHeader>
           Faça o Login<br/>
           Complete sua reserva
-        </LoginHeader>
+        </FormHeader>
         <Form onSubmit={handleSubmit}>
           { error && <FormError>{error}</FormError>}
           <InputField placeholder="Email" type="email" onChange={handleEmailChange} value={email} autocomplete />
@@ -72,7 +72,7 @@ const Login = () => {
           <Submit type="submit">Entrar</Submit>
         </Form>
 
-      </LoginBox>
+      </FormBox>
     </CenterDiv>
   );
 }
