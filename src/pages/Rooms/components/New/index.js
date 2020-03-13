@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 // import { useAuth } from "hooks/use-auth.js";
 
 import CenterDiv from "components/CenterDiv"
@@ -7,7 +8,7 @@ import { FormBox, FormHeader, Form, InputField, Submit, FormError } from "compon
 
 const API_URL = process.env.API_URL || `http://localhost:4000/api`;
 
-const NewRoom = ({ history }) => {  
+const NewRoom = () => {
   const [errors, setErrors] = useState(null);
   const [label, setLabel] = useState('');
   const [description, setDescription] = useState('');
@@ -15,6 +16,8 @@ const NewRoom = ({ history }) => {
   const [group, setGroup] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [womenOnly, setWomenOnly] = useState(false);
+
+  const history = useHistory();
 
   const handleSubmit = async(e) => {
     e.preventDefault()
@@ -46,9 +49,10 @@ const NewRoom = ({ history }) => {
 
         throw Error(JSON.stringify(message))
       }
-
-      history.replace("/rooms")
+      console.log('called')
+      history.push("/rooms")
     } catch(e) {
+      console.log('err', e)
       setErrors(JSON.parse(e.message))
     }
   }
